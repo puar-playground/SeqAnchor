@@ -7,12 +7,12 @@ We will use the ASM network structure to learn a set of patterns that captures b
 ![Test Image 1](gray_anchor.png)
 
 ## Data
-Greengenes, 16S rRNA dataset, length ~1400, diverse<br />
-Zymo, 16S rRNA dataset, length ~1400, less diverse<br />
-Silva 23S rRNA dataset, length ~3000<br />
+1. Greengenes, 16S rRNA dataset, length ~1400, diverse<br />
+2. Zymo, 16S rRNA dataset, length ~1400, less diverse<br />
+3. Silva 23S rRNA dataset, length ~3000<br />
 
-Bralibase, A dataset for MSA benchmark, we will explore it.<br />
-ITS dataset, I have played with it before, more work need to be done. They share a clear pattern on bigger picture, but might be too diverse locally.<br />
+4. Bralibase, A dataset for MSA benchmark, we will explore it.<br />
+5. ITS dataset, I have played with it before, more work need to be done. They share a clear pattern on bigger picture, but might be too diverse locally.<br />
 
 ## Benchmark
 We plan to use the Average-of-Pairs (AP) score, the Mean-Square-Error (MSE) of pairwise alignment distance as the accuracy measures. We will compare our model with Muscle, MAFFT, CLUSTAL Omega, Kalign, T-Coffee on 4 or 5 datasets and report their accuracy and efficiency.
