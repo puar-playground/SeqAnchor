@@ -7,12 +7,12 @@ We will use the ASM network structure to learn a set of patterns that captures b
 ![Test Image 1](gray_anchor.png)
 
 ## Data
-Greengenes, 16S rRNA dataset, length ~1400, diverse\n
-Zymo, 16S rRNA dataset, length ~1400, less diverse
-Silva 23S rRNA dataset, length ~3000
+Greengenes, 16S rRNA dataset, length ~1400, diverse<br />
+Zymo, 16S rRNA dataset, length ~1400, less diverse<br />
+Silva 23S rRNA dataset, length ~3000<br />
 
-Bralibase, A dataset for MSA benchmark, we will explore it.
-ITS dataset, I have played with it before, more work need to be done. They share a clear pattern on bigger picture, but might be too diverse locally.
+Bralibase, A dataset for MSA benchmark, we will explore it.<br />
+ITS dataset, I have played with it before, more work need to be done. They share a clear pattern on bigger picture, but might be too diverse locally.<br />
 
 
 ## Benchmark
