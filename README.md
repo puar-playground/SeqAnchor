@@ -17,3 +17,9 @@ ITS dataset, I have played with it before, more work need to be done. They share
 
 ## Benchmark
 We plan to use the Average-of-Pairs (AP) score, the Mean-Square-Error (MSE) of pairwise alignment distance as the accuracy measures. We will compare our model with Muscle, MAFFT, CLUSTAL Omega, Kalign, T-Coffee on 4 or 5 datasets and report their accuracy and efficiency.
+
+
+## Other Experiment
+Maybe read more papers, I have uploaded 2. I am thinking to do some more CS-style experiment and publish it as a CS paper. So maybe biology domain knowledge is not that important.
+
+
