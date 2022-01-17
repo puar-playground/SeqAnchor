@@ -7,7 +7,7 @@ We will use the ASM network structure to learn a set of patterns that captures b
 ![Test Image 1](gray_anchor.png)
 
 ## Data
-Greengenes, 16S rRNA dataset, length ~1400, diverse
+Greengenes, 16S rRNA dataset, length ~1400, diverse\\
 Zymo, 16S rRNA dataset, length ~1400, less diverse
 Silva 23S rRNA dataset, length ~3000
 
