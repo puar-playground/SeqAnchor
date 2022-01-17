@@ -1,3 +1,3 @@
 # SeqAnchor
 Our paper
-![Test Image 1](3DTest.png)
+![Test Image 1](ridgeline_spike.png)
