@@ -1,3 +1,6 @@
+python --version
+Python 3.9.7
+
 Package            Version
 ------------------ -----------------------
 biopython          1.79
