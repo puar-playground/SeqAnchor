@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "/Users/chenjian/Desktop/NCBI/fetch.py", line 5, in <module>
+    info = Entrez.esearch(db="nucleotide", term="SARS-CoV-2[ORGN]complete+genome", rettype="gb", retmax=1000, idtype="acc")
+  File "/Users/chenjian/venv3.9/lib/python3.9/site-packages/Bio/Entrez/__init__.py", line 242, in esearch
+    return _open(cgi, variables)
+  File "/Users/chenjian/venv3.9/lib/python3.9/site-packages/Bio/Entrez/__init__.py", line 606, in _open
+    handle = urlopen(cgi)
+  File "/opt/homebrew/Cellar/python@3.9/3.9.7_1/Frameworks/Python.framework/Versions/3.9/lib/python3.9/urllib/request.py", line 214, in urlopen
+    return opener.open(url, data, timeout)
+  File "/opt/homebrew/Cellar/python@3.9/3.9.7_1/Frameworks/Python.framework/Versions/3.9/lib/python3.9/urllib/request.py", line 523, in open
+    response = meth(req, response)
+  File "/opt/homebrew/Cellar/python@3.9/3.9.7_1/Frameworks/Python.framework/Versions/3.9/lib/python3.9/urllib/request.py", line 632, in http_response
+    response = self.parent.error(
+  File "/opt/homebrew/Cellar/python@3.9/3.9.7_1/Frameworks/Python.framework/Versions/3.9/lib/python3.9/urllib/request.py", line 561, in error
+    return self._call_chain(*args)
+  File "/opt/homebrew/Cellar/python@3.9/3.9.7_1/Frameworks/Python.framework/Versions/3.9/lib/python3.9/urllib/request.py", line 494, in _call_chain
+    result = func(*args)
+  File "/opt/homebrew/Cellar/python@3.9/3.9.7_1/Frameworks/Python.framework/Versions/3.9/lib/python3.9/urllib/request.py", line 641, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+
+
+related page:
+https://stackoverflow.com/questions/14827131/urllib2-httperror-python
