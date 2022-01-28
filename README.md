@@ -36,7 +36,7 @@ virtualenv -p python3 venv3
 Activate the python virtual environment and install packages.
 ```
 source ./venv3/bin/activate
-pip install -r requirements.txt
+pip install -r environment.txt
 ```
 
 ## Benchmark work
