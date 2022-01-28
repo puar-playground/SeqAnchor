@@ -1,5 +1,3 @@
-Package            Version
------------------- -----------------------
 biopython          1.79
 cycler             0.11.0
 Cython             0.29.24
