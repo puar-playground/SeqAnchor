@@ -9,7 +9,7 @@ We will use the ASM network structure to learn a set of patterns that captures b
 ## Datasets
 1. Greengenes, 16S rRNA dataset, length ~1400, diverse<br />
 2. Zymo, 16S rRNA dataset, length ~1400, less diverse<br />
-3. Silva 23S rRNA dataset, length ~3000 :heavy_multiplication_x: <br />
+3. Silva 23S rRNA dataset, length ~3000 :x: <br />
 4. Bralibase, A dataset for MSA benchmark, we will explore it.<br />
 5. ITS dataset, I have played with it before, more work need to be done. They share a clear pattern on bigger picture, but might be too diverse locally.<br />
 6. SARS-CoV-2 complete genome sequences from NCBI
