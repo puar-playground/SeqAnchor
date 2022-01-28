@@ -9,9 +9,10 @@ We will use the ASM network structure to learn a set of patterns that captures b
 ## Datasets
 1. Greengenes, 16S rRNA dataset, length ~1400, diverse<br />
 2. Zymo, 16S rRNA dataset, length ~1400, less diverse<br />
-3. Silva 23S rRNA dataset, length ~3000<br />
+3. Silva 23S rRNA dataset, length ~3000 :heavy_multiplication_x: <br />
 4. Bralibase, A dataset for MSA benchmark, we will explore it.<br />
 5. ITS dataset, I have played with it before, more work need to be done. They share a clear pattern on bigger picture, but might be too diverse locally.<br />
+6. SARS-CoV-2 complete genome sequences from NCBI
 
 ## Benchmark
 We plan to use the Average-of-Pairs (AP) score, the Mean-Square-Error (MSE) of pairwise alignment distance as the accuracy measures. We will compare our model with Muscle, MAFFT, CLUSTAL Omega, Kalign, T-Coffee on 4 or 5 datasets and report their accuracy and efficiency.
@@ -46,9 +47,9 @@ python setup.py build_ext --inplace
 
 ## Benchmark work
 Please download and install:<br />
-Kalign:<br />
+:mag: Kalign:<br />
 https://github.com/timolassmann/kalign <br />
-T-Coffee:<br />
+:mag: T-Coffee:<br />
 https://tcoffee.readthedocs.io/en/latest/tcoffee_installation.html<br />
 :ballot_box_with_check: Muscle:<br />
 https://www.drive5.com/muscle/<br />
