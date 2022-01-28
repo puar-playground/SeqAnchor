@@ -50,6 +50,13 @@ Kalign:<br />
 https://github.com/timolassmann/kalign <br />
 T-Coffee:<br />
 https://tcoffee.readthedocs.io/en/latest/tcoffee_installation.html<br />
+Muscle:<br />
+https://www.drive5.com/muscle/<br />
+MAFFT:<br />
+https://mafft.cbrc.jp/alignment/software/<br />
+Clustal Omega:<br />
+http://www.clustal.org/omega/<br />
+
 
 Then please use the default parameter settings to generate result on the 2 datasets:<br />
 For datasets:<br />
