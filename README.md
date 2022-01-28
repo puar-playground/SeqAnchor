@@ -45,6 +45,12 @@ python setup.py build_ext --inplace
 ```
 
 ## Benchmark work
+Please download and install:<br />
+Kalign:<br />
+https://github.com/timolassmann/kalign <br />
+T-Coffee:<br />
+https://tcoffee.readthedocs.io/en/latest/tcoffee_installation.html<br />
+
 Generate result of the methods: Kalign, T-Coffee<br />
 For datasets:<br />
 ./Dataset/Greengenes/train/gg_*.fa <br />
