@@ -40,6 +40,7 @@ pip install -r environment.txt
 ```
 Use the 'setup.py' script build the Cython program 'ASM.so'
 ```
+cd src
 python setup.py build_ext --inplace
 ```
 
