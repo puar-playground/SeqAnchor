@@ -22,3 +22,12 @@ Maybe read more papers, I have uploaded 2. I am thinking to do some more CS-styl
 2. We could do parameter sensitivity experiment to see how the pattern length affect performance.
 3. We could use the anchor position imformation to design embeddings and train classifier. (this is actually useless) But we could only use the interval lengths as input to train a classifier. If it is capable of discriminating sequences on a reasonable taxonomy level, it could be something to present in the paper.
 4. A more challenging task could be using our method to do MSA on Virus genomes. we might be able to download genome sequences of SARS-COV-2 (Covid 19). They are ~30000 bps long. So we need to modify our model and code for efficiency. (This is an eye-catching keyword)
+
+
+## Benchmark work
+Generate result of the methods: Kalign, T-Coffee
+For datasets:
+./Dataset/Greengenes/train/gg_*.fa
+./Dataset/zymo/zymo_*.fa
+./Dataset/Silva_23s/23s_1000/23s_1000_*.fa
+
