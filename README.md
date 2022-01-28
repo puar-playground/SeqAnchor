@@ -25,9 +25,9 @@ Maybe read more papers, I have uploaded 2. I am thinking to do some more CS-styl
 
 
 ## Benchmark work
-Generate result of the methods: Kalign, T-Coffee
-For datasets:
-./Dataset/Greengenes/train/gg_*.fa
-./Dataset/zymo/zymo_*.fa
-./Dataset/Silva_23s/23s_1000/23s_1000_*.fa
+Generate result of the methods: Kalign, T-Coffee<br />
+For datasets:<br />
+./Dataset/Greengenes/train/gg_*.fa<br />
+./Dataset/zymo/zymo_*.fa<br />
+./Dataset/Silva_23s/23s_1000/23s_1000_*.fa<br />
 
