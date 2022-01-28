@@ -29,9 +29,9 @@ Install virtualenv for python3
 ```
 sudo pip3 install virtualenv
 ```
-Create a virtual environment named venv3 or prefered name
+Create a virtual environment named venv3 or prefered directory
 ```
-virtualenv -p python3 venv3
+virtualenv -p python3 ~/venv3
 ```
 Activate the python virtual environment and install packages.
 ```
