@@ -1,5 +1,6 @@
 #cython: boundscheck=False, cdivision=True, wraparound=False
 import numpy as np
+from libc.stdio cimport printf
 
 def ASM_fast(double[:, :] seq1, double[:, :] seq2, int gap):
     cdef int L1 = seq1.shape[1]
@@ -378,32 +379,32 @@ def asm_profile_align(double[:, :] seq1, double[:, :] seq2, int gap):
     s_query_align = []
     s_ref_align = []
 
-    while F[L1, j] != last_row_max:
+    while F[L1, j] - last_row_max > 1e-8:
         s_query_align.append('-')
         s_ref_align.append('*')
         j -= 1
 
+    cdef double residue_diag, residue_up, residue_left
+    # printf("%i, %i, %i \n", i, j, i + j)
     while i + j != 0:
-
         if i * j > 0:
             match = 0
             for d in range(dim):
                 match += seq1[d, i - 1] * seq2[d, j - 1]
 
-            if F[i, j] == F[i - 1, j - 1] + match:
-                s_query_align.append('*')
-                s_ref_align.append('*')
-                i -= 1
-                j -= 1
-            elif F[i, j] == F[i - 1, j] - 1:
+            residue_diag = abs(F[i, j] - (F[i - 1, j - 1] + match))
+            residue_up = abs(F[i, j] - (F[i - 1, j] - gap))
+            residue_left = abs(F[i, j] - (F[i, j - 1] - gap))
+
+            if residue_up < 1e-8:
                 s_query_align.append('*')
                 s_ref_align.append('-')
                 i -= 1
-            elif F[i, j] == F[i, j - 1] - 1:
+            elif residue_left < 1e-8:
                 s_query_align.append('-')
                 s_ref_align.append('*')
                 j -= 1
-            else:
+            elif residue_diag < 1e-8:
                 s_query_align.append('*')
                 s_ref_align.append('*')
                 i -= 1
@@ -413,7 +414,7 @@ def asm_profile_align(double[:, :] seq1, double[:, :] seq2, int gap):
             s_query_align.append('*')
             s_ref_align.append('-')
             i -= 1
-        elif j > 0:
+        else:
             s_query_align.append('-')
             s_ref_align.append('*')
             j -= 1
