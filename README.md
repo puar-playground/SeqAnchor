@@ -24,6 +24,21 @@ Maybe read more papers, I have uploaded 2. I am thinking to do some more CS-styl
 4. A more challenging task could be using our method to do MSA on Virus genomes. we might be able to download genome sequences of SARS-COV-2 (Covid 19). They are ~30000 bps long. So we need to modify our model and code for efficiency. (This is an eye-catching keyword)
 
 
+## Python Virtualenv Preparation
+Install virtualenv for python3
+```
+sudo pip3 install virtualenv
+```
+Create a virtual environment named venv3 or prefered name
+```
+virtualenv -p python3 venv3
+```
+Activate the python virtual environment and install packages.
+```
+source ./venv3/bin/activate
+pip install -r requirements.txt
+```
+
 ## Benchmark work
 Generate result of the methods: Kalign, T-Coffee<br />
 For datasets:<br />
