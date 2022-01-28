@@ -38,6 +38,10 @@ Activate the python virtual environment and install packages.
 source ./venv3/bin/activate
 pip install -r environment.txt
 ```
+Use the 'setup.py' script build the Cython program 'ASM.so'
+```
+python setup.py build_ext --inplace
+```
 
 ## Benchmark work
 Generate result of the methods: Kalign, T-Coffee<br />
