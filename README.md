@@ -50,11 +50,11 @@ Kalign:<br />
 https://github.com/timolassmann/kalign <br />
 T-Coffee:<br />
 https://tcoffee.readthedocs.io/en/latest/tcoffee_installation.html<br />
-Muscle:<br />
+:ballot_box_with_check: Muscle:<br />
 https://www.drive5.com/muscle/<br />
-MAFFT:<br />
+:ballot_box_with_check: MAFFT:<br />
 https://mafft.cbrc.jp/alignment/software/<br />
-Clustal Omega:<br />
+:ballot_box_with_check: Clustal Omega:<br />
 http://www.clustal.org/omega/<br />
 
 
