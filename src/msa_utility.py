@@ -388,7 +388,7 @@ if __name__ == "__main__":
     n_anchor = 45
     n_seq = 1000
     net = Anchor_dp(20, anchor_n=n_anchor, norm_ratio=1)
-    net_state_dict = torch.load('./model/finished_anchors.pt')
+    net_state_dict = torch.load('../ckpt/finished_anchors.pt')
     net.load_state_dict(net_state_dict)
 
     Train_Seq = SeqDataset('./Dataset/zymo/zymo_0.fa', n=n_seq)
