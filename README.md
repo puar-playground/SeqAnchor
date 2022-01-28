@@ -51,9 +51,7 @@ https://github.com/timolassmann/kalign <br />
 T-Coffee:<br />
 https://tcoffee.readthedocs.io/en/latest/tcoffee_installation.html<br />
 
-Generate result of the methods: Kalign, T-Coffee<br />
+Then please use the default parameter settings to generate result on the 2 datasets:<br />
 For datasets:<br />
-./Dataset/Greengenes/train/gg_*.fa <br />
-./Dataset/zymo/zymo_*.fa <br />
-./Dataset/Silva_23s/23s_1000/23s_1000_*.fa <br />
-
+./Dataset/Greengenes/train/gg_{0...9}.fa <br />
+./Dataset/zymo/zymo_{0...9}.fa <br />
