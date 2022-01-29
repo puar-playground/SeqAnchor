@@ -1,4 +1,5 @@
-from msa_utility import msa_compress_gap
+# from msa_utility import msa_compress_gap
+
 
 def read_seq(seq_dir):
     f_s = open(seq_dir, 'r')
@@ -62,15 +63,13 @@ def sop(msa_list):
 
 if __name__ == "__main__":
 
-    msa = read_seq('/Users/chenjian/Desktop/muscle/gg/gg_' + str(4) + '_aligned.fa')
+    msa = read_seq('/Users/chenjian/Desktop/muscle/gg/gg_' +
+                   str(4) + '_aligned.fa')
     msa = msa[:100]
 
-    msa = msa_compress_gap(msa)
+    # msa = msa_compress_gap(msa)
     socre = aop(msa)
 
     for i in range(10):
         print(msa[i])
         # print(len(msa[i]))
-
-
-

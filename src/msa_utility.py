@@ -1,15 +1,15 @@
+import numpy as np
+from ASM import ASM_fast, anchor_align_fast, nw_align, asm_align, nw_profile_align, asm_profile_align
+import pandas as pd
+import time
+import random
 from test_score import aop
 from data_utility import *
 import torch
 torch.manual_seed(0)
-import random
 random.seed(0)
-import time
-import pandas as pd
-from ASM import ASM_fast, anchor_align_fast, nw_align, asm_align, nw_profile_align, asm_profile_align
-import numpy as np
 np.set_printoptions(edgeitems=30, linewidth=100000,
-    formatter=dict(float=lambda x: "%5.2f" % x))
+                    formatter=dict(float=lambda x: "%5.2f" % x))
 
 
 def alignment_to_profile(seqs):
@@ -19,7 +19,8 @@ def alignment_to_profile(seqs):
     for s in seqs:
         if s is not None and len(s) != 0:
             x = [basis[c] for c in s]
-            oh = np.concatenate((np.eye(4), -0.5*np.ones((4, 1))), axis=1)[:, x]
+            oh = np.concatenate(
+                (np.eye(4), -0.5*np.ones((4, 1))), axis=1)[:, x]
             profile += oh
     profile *= 1/len(seqs)
     # profile = profile / np.linalg.norm(profile, axis=0)
@@ -57,7 +58,8 @@ def merge_anchor(anchor_align_list, p_length):
     n_seq = len(anchor_align_list)
     for i in range(n_seq):
         if anchor_align_list[i][1] != '':
-            gap_count_all[i, :] = pattern_gaps(anchor_align_list[i][0], p_length)
+            gap_count_all[i, :] = pattern_gaps(
+                anchor_align_list[i][0], p_length)
         bas_log.append(anchor_align_list[i][1])
 
     gap_cumulate = np.max(gap_count_all, axis=0).astype(int)
@@ -107,28 +109,33 @@ def anchoring(net, Train_Seq, th=0.6):
         head = trim_point[:, max(0, anchor_index - 1)].astype(int)
         for i in range(len(data_oh)):
 
-            data_oh_trim = data_oh[i][0, :, head[i]:].numpy().astype(np.float64)
+            data_oh_trim = data_oh[i][0, :, head[i]                                      :].numpy().astype(np.float64)
 
             if data_oh_trim.shape[1] < 20:
                 anchor_align_array.append(('', ''))
                 anchor_position[i].append((None, None))
                 trim_temp[i] = 0
             else:
-                p = net.patterns.detach().numpy()[anchor_index, :, :].astype(np.float64)
-                p_align, s_align, (j_min, j_max), v = anchor_align_fast(p, data_oh_trim, 1)
+                p = net.patterns.detach().numpy(
+                )[anchor_index, :, :].astype(np.float64)
+                p_align, s_align, (j_min, j_max), v = anchor_align_fast(
+                    p, data_oh_trim, 1)
                 anchor_position[i].append((head[i]+j_min, head[i]+j_max))
                 anchor_align_array.append((p_align, s_align))
                 max_values[i] = v
                 trim_temp[i] = j_max
 
         keep_mask = (max_values > th * np.max(max_values))
-        anchor_align_array = [x if keep else ('', '') for keep, x in zip(keep_mask, anchor_align_array)]
-        anchor_position = [x if keep else x[:-1] + [(None, None)] for keep, x in zip(keep_mask, anchor_position)]
+        anchor_align_array = [x if keep else (
+            '', '') for keep, x in zip(keep_mask, anchor_align_array)]
+        anchor_position = [x if keep else x[:-1] +
+                           [(None, None)] for keep, x in zip(keep_mask, anchor_position)]
         trim_point[:, anchor_index] = np.multiply(trim_temp, keep_mask) + head
         merged_output = merge_anchor(anchor_align_array, net.kernel_size)
 
         # aligned_anchor_pd[anchor_index] = merged_output
-        aligned_anchor_array = [x + [s] for (x, s) in zip(aligned_anchor_array, merged_output)]
+        aligned_anchor_array = [x + [s]
+                                for (x, s) in zip(aligned_anchor_array, merged_output)]
     return aligned_anchor_array, anchor_position
 
 
@@ -157,7 +164,8 @@ def inter_retriving(anchor_position, Train_Seq):
                     a_right = a
                     # from a_left -th interval to a_right -th interval (end points included)
                     # (2, 3): aligned_intervals[i][2] + aligned_anchors[i][2] + aligned_intervals[i][3]
-                    shortcuts[i].append((s[left_st:right_st], str(a_left) + '-' + str(a_right)))
+                    shortcuts[i].append(
+                        (s[left_st:right_st], str(a_left) + '-' + str(a_right)))
 
     return intervals, shortcuts
 
@@ -169,7 +177,8 @@ def inter_aligning(intervals, n_anchor, mode='asm'):
     # intervals_pd = pd.DataFrame(columns=range(n_inter), index=range(n_seq))
     aligned_intervals = [[None for _ in range(n_inter)] for _ in range(n_seq)]
     for i in range(n_inter):
-        same_inters = sorted(set([x[i] for x in intervals if x[i] and x[i] != '']), key=lambda x: -len(x))
+        same_inters = sorted(
+            set([x[i] for x in intervals if x[i] and x[i] != '']), key=lambda x: -len(x))
         if len(same_inters) == 0:
             for s in range(n_seq):
                 if intervals[s][i] is not None:
@@ -184,7 +193,8 @@ def inter_aligning(intervals, n_anchor, mode='asm'):
 
             merged_inters = merge_anchor(inter_align_array, len(represent))
             inter_dict = {k: v for k, v in zip(same_inters, merged_inters)}
-            inter_dict[''] = ''.join(['-' for _ in range(len(merged_inters[0]))])
+            inter_dict[''] = ''.join(
+                ['-' for _ in range(len(merged_inters[0]))])
             for s in range(n_seq):
                 if intervals[s][i] is not None:
                     aligned_intervals[s][i] = inter_dict[intervals[s][i]]
@@ -207,8 +217,10 @@ def representative_msa(seq_list, mode='asm'):
 
 def shortcut_adapting(shortcuts, anchor_profile, inter_profile, mode='asm'):
     # initialize gap array for representative msa gap accumulation
-    anchor_gap_array = [np.zeros([ap.shape[1] - 1]).astype(int) for ap in anchor_profile]
-    inter_gap_array = [np.zeros([ip.shape[1] + 1]).astype(int) for ip in inter_profile]
+    anchor_gap_array = [np.zeros([ap.shape[1] - 1]).astype(int)
+                        for ap in anchor_profile]
+    inter_gap_array = [np.zeros([ip.shape[1] + 1]).astype(int)
+                       for ip in inter_profile]
 
     # a dict using all skip (from which inter to which inter) as keys, all shortcut strings as values for the skip
     sc = dict()
@@ -240,15 +252,21 @@ def shortcut_adapting(shortcuts, anchor_profile, inter_profile, mode='asm'):
         bounds = [int(x) for x in k.split('-')]
         ref_profile = np.zeros([4, 0]).astype(int)
         for b in range(bounds[0], bounds[1]):
-            on_sc_gap_index += [('inter', b, _) for _ in range(inter_profile[b].shape[1] + 1)] + [('anchor', b, _) for _ in range(anchor_profile[b].shape[1] - 1)]
-            ref_profile = np.concatenate((ref_profile, inter_profile[b], anchor_profile[b]), axis=1)
-        ref_profile = np.concatenate((ref_profile, inter_profile[bounds[1]]), axis=1)
-        on_sc_gap_index += [('inter', bounds[1], _) for _ in range(inter_profile[bounds[1]].shape[1] + 1)]
+            on_sc_gap_index += [('inter', b, _) for _ in range(inter_profile[b].shape[1] + 1)] + [
+                ('anchor', b, _) for _ in range(anchor_profile[b].shape[1] - 1)]
+            ref_profile = np.concatenate(
+                (ref_profile, inter_profile[b], anchor_profile[b]), axis=1)
+        ref_profile = np.concatenate(
+            (ref_profile, inter_profile[bounds[1]]), axis=1)
+        on_sc_gap_index += [('inter', bounds[1], _)
+                            for _ in range(inter_profile[bounds[1]].shape[1] + 1)]
 
         if ref_profile.shape[1] >= shortcut_profile.shape[1]:
-            scp_aligned, refp_aligned = asm_profile_align(shortcut_profile, ref_profile, 1)
+            scp_aligned, refp_aligned = asm_profile_align(
+                shortcut_profile, ref_profile, 1)
         else:
-            refp_aligned, scp_aligned = asm_profile_align(ref_profile, shortcut_profile, 1)
+            refp_aligned, scp_aligned = asm_profile_align(
+                ref_profile, shortcut_profile, 1)
 
         scp_align_results[k] = (scp_aligned, refp_aligned)
 
@@ -272,9 +290,12 @@ def shortcut_adapting(shortcuts, anchor_profile, inter_profile, mode='asm'):
         bounds = [int(x) for x in k.split('-')]
         ref_gap_array = np.zeros([0]).astype(int)
         for b in range(bounds[0], bounds[1]):
-            ref_gap_array = np.concatenate((ref_gap_array, inter_gap_array[b], anchor_gap_array[b]))
-        ref_gap_array = np.concatenate((ref_gap_array, inter_gap_array[bounds[1]]))
-        sc_gap_array = pattern_gaps(scp_align_results[k][1], ref_gap_array.shape[0] - 1)
+            ref_gap_array = np.concatenate(
+                (ref_gap_array, inter_gap_array[b], anchor_gap_array[b]))
+        ref_gap_array = np.concatenate(
+            (ref_gap_array, inter_gap_array[bounds[1]]))
+        sc_gap_array = pattern_gaps(
+            scp_align_results[k][1], ref_gap_array.shape[0] - 1)
         gap_insert = ref_gap_array - sc_gap_array
         if np.sum(gap_insert) > 0:
             s_merge = []
@@ -286,7 +307,8 @@ def shortcut_adapting(shortcuts, anchor_profile, inter_profile, mode='asm'):
                     insert_str += ''.join(['-' for _ in range(insert_n)])
                 # insertion own
                 if sc_gap_array[insert_i] > 0:
-                    insert_str += scp_align_results[k][0][p_index:p_index + sc_gap_array[insert_i]]
+                    insert_str += scp_align_results[k][0][p_index:p_index +
+                                                          sc_gap_array[insert_i]]
                     p_index += sc_gap_array[insert_i]
                 s_merge.append(insert_str)
 
@@ -308,7 +330,8 @@ def shortcut_adapting(shortcuts, anchor_profile, inter_profile, mode='asm'):
     for i in range(n_seq):
         if len(shortcuts[i]) != 0:
             # print(shortcuts[i])
-            shortcuts[i] = [(sc_align_lookup[pair_ind][sc], pair_ind) for (sc, pair_ind) in shortcuts[i]]
+            shortcuts[i] = [(sc_align_lookup[pair_ind][sc], pair_ind)
+                            for (sc, pair_ind) in shortcuts[i]]
             # print(shortcuts[i])
 
     return anchor_gap_array, inter_gap_array, shortcuts
@@ -321,7 +344,7 @@ def anchors_adapting(aligned_anchors_pd, anchor_gap_array):
                 if gap_array[g] > 0:
                     insert_g = ''.join(['-' for _ in range(gap_array[g])])
                     aligned_anchors_pd[i] = [s[:g+1] + insert_g + s[g+1:] if s is not None else None for s in
-                                               aligned_anchors_pd[i]]
+                                             aligned_anchors_pd[i]]
     return aligned_anchors_pd
 
 
@@ -351,24 +374,26 @@ def msa_assemble(aligned_anchors_pd, aligned_intervals_pd, shortcuts_aligned):
     for i in range(n_seq):
         if len(shortcuts_aligned[i]) == 0:
             msa[i] = aligned_intervals_pd[0][i] + \
-                     partial_assemble(aligned_anchors_pd, aligned_intervals_pd, i, 0, n_anchor - 1) \
-                     + aligned_intervals_pd[n_anchor][i]
+                partial_assemble(aligned_anchors_pd, aligned_intervals_pd, i, 0, n_anchor - 1) \
+                + aligned_intervals_pd[n_anchor][i]
         else:
             start = 0
             for sc in shortcuts_aligned[i]:
                 end = int(sc[1].split('-')[0]) - 1
                 if start == 0 and end >= 0:
                     msa[i] += aligned_intervals_pd[start][i] + \
-                              partial_assemble(aligned_anchors_pd, aligned_intervals_pd, i, start, end) + sc[0]
+                        partial_assemble(
+                            aligned_anchors_pd, aligned_intervals_pd, i, start, end) + sc[0]
                 elif start > 0 and end >= 0:
-                    msa[i] += partial_assemble(aligned_anchors_pd, aligned_intervals_pd, i, start, end) + sc[0]
+                    msa[i] += partial_assemble(aligned_anchors_pd,
+                                               aligned_intervals_pd, i, start, end) + sc[0]
                 else:
                     msa[i] += sc[0]
                 start = int(sc[1].split('-')[1])
 
             if start < n_anchor - 1:
                 msa[i] += partial_assemble(aligned_anchors_pd, aligned_intervals_pd, i, start, n_anchor - 1) + \
-                          aligned_intervals_pd[n_anchor][i]
+                    aligned_intervals_pd[n_anchor][i]
 
     return msa
 
@@ -378,44 +403,52 @@ def msa_compress_gap(msa):
     for s in msa:
         accumulate += np.array([1 if c == '-' else 0 for c in s]).astype(int)
     remove_ind = set(np.where(accumulate == len(msa))[0])
-    msa_compressed = [''.join([c for idx, c in enumerate(s) if idx not in remove_ind]) for s in msa]
+    msa_compressed = [
+        ''.join([c for idx, c in enumerate(s) if idx not in remove_ind]) for s in msa]
     return msa_compressed
 
 
 if __name__ == "__main__":
 
     start = time.time()
-    n_anchor = 45
-    n_seq = 1000
+    n_anchor = 47
+    n_seq = 100
     net = Anchor_dp(20, anchor_n=n_anchor, norm_ratio=1)
-    net_state_dict = torch.load('../ckpt/finished_anchors.pt')
+    net_state_dict = torch.load('../ckpt/zymo_anchor_47.pt')
     net.load_state_dict(net_state_dict)
 
-    Train_Seq = SeqDataset('./Dataset/zymo/zymo_0.fa', n=n_seq)
+    Train_Seq = SeqDataset('../dataset/zymo/zymo_0.fa', n=n_seq)
     print('Data loaded, cost: %4.2fs' % (time.time() - start))
 
     start = time.time()
     # anchoring
     aligned_anchors, anchor_position = anchoring(net, Train_Seq, th=0.6)
-    aligned_anchors_pd = pd.DataFrame(data=aligned_anchors, columns=range(n_anchor), index=range(n_seq))
+    aligned_anchors_pd = pd.DataFrame(
+        data=aligned_anchors, columns=range(n_anchor), index=range(n_seq))
     # get intervals and do representative msa
     intervals, shortcuts = inter_retriving(anchor_position, Train_Seq)
-    inter_pd = pd.DataFrame(data=intervals, columns=range(n_anchor + 1), index=range(n_seq))
+    inter_pd = pd.DataFrame(data=intervals, columns=range(
+        n_anchor + 1), index=range(n_seq))
     aligned_intervals = inter_aligning(intervals, n_anchor, mode='asm')
-    aligned_intervals_pd = pd.DataFrame(data=aligned_intervals, columns=range(n_anchor + 1), index=range(n_seq))
+    aligned_intervals_pd = pd.DataFrame(
+        data=aligned_intervals, columns=range(n_anchor + 1), index=range(n_seq))
 
     # get profiles
-    anchor_profile = [alignment_to_profile(aligned_anchors_pd[i]) for i in range(n_anchor)]
-    inter_profile = [alignment_to_profile(aligned_intervals_pd[i]) for i in range(n_anchor + 1)]
+    anchor_profile = [alignment_to_profile(
+        aligned_anchors_pd[i]) for i in range(n_anchor)]
+    inter_profile = [alignment_to_profile(
+        aligned_intervals_pd[i]) for i in range(n_anchor + 1)]
 
     # process shortcut
     anchor_gap_array, inter_gap_array, shortcuts_aligned = shortcut_adapting(shortcuts, anchor_profile,
                                                                              inter_profile, mode='nw')
     aligned_anchors_pd = anchors_adapting(aligned_anchors_pd, anchor_gap_array)
-    aligned_intervals_pd = inters_adapting(aligned_intervals_pd, inter_gap_array)
+    aligned_intervals_pd = inters_adapting(
+        aligned_intervals_pd, inter_gap_array)
 
     # msa merge
-    msa = msa_assemble(aligned_anchors_pd, aligned_intervals_pd, shortcuts_aligned)
+    msa = msa_assemble(aligned_anchors_pd,
+                       aligned_intervals_pd, shortcuts_aligned)
     print('MSA done cost: %4.2fs' % (time.time() - start))
 
     msa = msa_compress_gap(msa[:100])
@@ -424,5 +457,3 @@ if __name__ == "__main__":
 
     for s in msa:
         print(s)
-
-
