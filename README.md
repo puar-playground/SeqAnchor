@@ -66,9 +66,9 @@ For datasets:<br />
 
 
 
-|       | seq_1 | seq_2 | seq_3 | xx |
+|       | seq_1 | seq_2 | seq_3 | ... |
 | ----------- | ----------- | ----------- | ----------- | ----------- |
 | seq_1 | xx      | xx       | xx | xx |
 | seq_2 | xx   | xx        | xx | xx |
 | seq_3 | xx   | xx        | xx | xx |
-
+| ... | xx   | xx        | xx | xx |
