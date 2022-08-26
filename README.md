@@ -66,7 +66,8 @@ For datasets:<br />
 
 
 
-| Syntax      | Description |
-| ----------- | ----------- |
-| Header      | Title       |
-| Paragraph   | Text        |
+|       | seq_1 | seq_2 | seq_3 |
+| ----------- | ----------- | ----------- | ----------- |
+| seq_1 | xx      | xx       | xx | xx |
+| seq_2 | xx   | xx        | xx | xx |
+| seq_3 | xx   | xx        | xx | xx |
