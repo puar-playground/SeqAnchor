@@ -63,3 +63,10 @@ Then please use the default parameter settings to generate result on the 2 datas
 For datasets:<br />
 ./Dataset/Greengenes/train/gg_{0...9}.fa <br />
 ./Dataset/zymo/zymo_{0...9}.fa <br />
+
+
+
+| Syntax      | Description |
+| ----------- | ----------- |
+| Header      | Title       |
+| Paragraph   | Text        |
